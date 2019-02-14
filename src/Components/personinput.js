@@ -3,22 +3,18 @@ import axios from 'axios';
 
  export default class PersonInput extends React.Component {
   state = {
-    name: '',
+    id: 0,
   };
 
   handleChange = event => {
-    this.setState({ name: event.target.value});
+    this.setState({ id: event.target.value});
   };
 
   handleSubmit = event => {
     event.preventDefault();
 
-    const user = {
-      name: this.state.name,
-    }
-
     axios
-    .post('https://jsonplaceholder.typicode.com/users', { user })
+    .delete('https://jsonplaceholder.typicode.com/users/${this.state.id}')
     .then(res => {
       console.log(res);
       console.log(res.data);
@@ -29,10 +25,10 @@ import axios from 'axios';
     return (
       <form onSubmit={this.handleSubmit}>
         <label>
-          Person Name:
-          <input type="text" name="name" onChange={this.handleChange}/>
+          Person ID:
+          <input type="number" name="id" onChange={this.handleChange}/>
         </label>
-        <button type="submit">Add</button>
+        <button type="submit">Delete</button>
       </form>
     );
   }
